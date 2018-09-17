@@ -1,14 +1,16 @@
-var {startBounce}= require('./bounce.js'); 
+//var {startBounce}= require('./bounce.js'); 
 
-const app = new PIXI.Application(600, 600, {
+const app = new PIXI.Application( {
+    width:600,
+    height: 600,
     transparent: true,
     resolution: 1,
     backgroundColor: 666666
 });
 
-
-//document.body.appendChild(app.view);
 document.getElementById('display').appendChild(app.view);
+let container = new PIXI.Container();
+//container.addChild(ball);
 
 var ball
 
@@ -21,39 +23,37 @@ function setup() {
         PIXI.loader.resources["img/ball.png"].texture
     );
     ball.interactive = true;
-    ball.scale.set(0.3, 0.3);
-    //ball.pivot.set(200,0);
+    ball.scale.set(0.2, 0.2);
     ball.anchor.set(0.5, 0.5);
-
-    /*ball.click = function() {
-        ball.scale.x -= 0.1;
-        ball.scale.y -= 0.1;
-    }; */
-
-    // stage.addChild(ball); 
-
-    // anitmationloop();
     ball.x = 300;
     ball.y = 100;
 
     app.stage.addChild(ball);
+    //  setSpeed();
     startBounce();
+
 }
 
 let yVelo = 1;
 let count = 0;
+var speed2 = 3;
+
 startBounce = () => {
     const ticker = new PIXI.ticker.Ticker();
     ticker.stop();
-    ticker.add((deltaTime) => {
+    ticker.add(() => {
 
-        var speed = ticker.speed = 2;
-        //  console.log('ball' + ball.y);
-        ball.y += yVelo + speed;
-        if (ball.y == 430) {
+        //speed2 = slider.value;
+
+        // ticker.speed = speed2;
+        //console.log("tickerSpeed"+ speed2) ;
+        ball.y += yVelo + speed2;
+        //console.log("ball.y" +  ball.y);
+        if (ball.y >= 430) {
             ticker.stop();
             reverse();
         }
+
     });
     ticker.start();
 }
@@ -61,15 +61,30 @@ startBounce = () => {
 reverse = () => {
     const ticker = new PIXI.ticker.Ticker();
     ticker.stop();
-    ticker.add((deltaTime) => {
-        var speed = ticker.speed = 2;
-        ball.y -= yVelo + speed;
-        if (ball.y == 100) {
+    ticker.add(() => {
+
+        //speed2 = slider.value;
+
+        // ticker.speed = speed2;
+        // console.log("tickerSpeed"+ speed2) ;
+        ball.y -= yVelo + speed2;
+        //  console.log("ball.y" + ball.y);
+        if (ball.y <= 100) {
             ticker.stop();
             startBounce();
         }
     });
     ticker.start();
 }
+
+var slider = document.getElementById("myRange");
+slider.oninput = function () {
+    var converNumber = Number(this.value);
+    console.log(converNumber)
+    speed2 = converNumber;
+
+}
+
+
 
 

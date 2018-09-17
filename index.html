@@ -1,17 +1,26 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Displaying the canvas</title>
+
 <head>
   <link rel="stylesheet" href="styles.css">
   <script src="pixi/pixi.js"></script>
-  <script src="pixi/pixi.js.map"></script>
+  <!--<script src="pixi/pixi.js.map"></script>-->
 </head>
+
 <body>
-<!--<script src="pixi/pixi.min.js"></script>-->
-<div id="display"/>
-<script type="text/javascript" src="app.js">
+  <!--<script src="pixi/pixi.min.js"></script>-->
+
+  <div id="display" />
+  <div id="slidecontainer">
+    <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
+    <h3 id=highspeedtext>
+      Speed
+    </h3>
+  </div>
+
+  <script type="text/javascript" src="app.js">
 
 
-</script>
+  </script>
 </body>
-
