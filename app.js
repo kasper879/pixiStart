@@ -1,23 +1,28 @@
-//var {startBounce}= require('./bounce.js'); 
 
-const app = new PIXI.Application( {
-    width:600,
-    height: 600,
+
+var renderer, stage;
+//The WebGLRenderer creates a scene for content
+renderer = new PIXI.WebGLRenderer(600, 600, {
     transparent: true,
     resolution: 1,
-    backgroundColor: 666666
 });
+document.body.appendChild(renderer.view);
+//Creates PIXI.Container for all objects ex. images. 
+stage = new PIXI.Container();
 
-document.getElementById('display').appendChild(app.view);
-let container = new PIXI.Container();
-//container.addChild(ball);
+//img 
+var ball;
+var slowSpeedIcon;
+var fastSpeedIcon
 
-var ball
-
+//Loader images and setup function
 PIXI.loader
     .add("img/ball.png")
+    .add("img/slowSpeed2.jpg")
+    .add("img/fastSpeed.jpg")
     .load(setup);
 
+//Setup function Loads all images and configurations
 function setup() {
     ball = new PIXI.Sprite(
         PIXI.loader.resources["img/ball.png"].texture
@@ -27,48 +32,52 @@ function setup() {
     ball.anchor.set(0.5, 0.5);
     ball.x = 300;
     ball.y = 100;
+    //add Image to the Container 
+    stage.addChild(ball);
 
-    app.stage.addChild(ball);
-    //  setSpeed();
+    slowSpeedIcon = new PIXI.Sprite(
+        PIXI.loader.resources["img/slowSpeed2.jpg"].texture
+    );
+    slowSpeedIcon.interactive = true;
+    slowSpeedIcon.scale.set(0.1, 0.1);
+    slowSpeedIcon.anchor.set(0.5, 0.5);
+    slowSpeedIcon.x = renderer.width / 5;
+    slowSpeedIcon.y = (renderer.height / 8) * 7;
+    stage.addChild(slowSpeedIcon);
+
+    fastSpeedIcon = new PIXI.Sprite(
+        PIXI.loader.resources["img/fastSpeed.jpg"].texture
+    );
+    fastSpeedIcon.interactive = true;
+    fastSpeedIcon.scale.set(0.1, 0.1);
+    fastSpeedIcon.anchor.set(0.5, 0.5);
+    fastSpeedIcon.x = (renderer.width / 5) * 4;
+    fastSpeedIcon.y = (renderer.height / 8) * 7;
+    stage.addChild(fastSpeedIcon);
+
     startBounce();
-
+    render();
 }
 
-let yVelo = 1;
-let count = 0;
-var speed2 = 3;
-
+var yAxis = 1;
+var speed = 5;
+//StartBounce function Runs Pixi.Ticker() that runs an update loop, until it hit the requirements 
 startBounce = () => {
     const ticker = new PIXI.ticker.Ticker();
-    ticker.stop();
     ticker.add(() => {
-
-        //speed2 = slider.value;
-
-        // ticker.speed = speed2;
-        //console.log("tickerSpeed"+ speed2) ;
-        ball.y += yVelo + speed2;
-        //console.log("ball.y" +  ball.y);
+        ball.y += yAxis + speed;
         if (ball.y >= 430) {
             ticker.stop();
-            reverse();
+            reverseBounce();
         }
-
     });
     ticker.start();
 }
 
-reverse = () => {
+reverseBounce = () => {
     const ticker = new PIXI.ticker.Ticker();
-    ticker.stop();
     ticker.add(() => {
-
-        //speed2 = slider.value;
-
-        // ticker.speed = speed2;
-        // console.log("tickerSpeed"+ speed2) ;
-        ball.y -= yVelo + speed2;
-        //  console.log("ball.y" + ball.y);
+        ball.y -= yAxis + speed;
         if (ball.y <= 100) {
             ticker.stop();
             startBounce();
@@ -77,12 +86,18 @@ reverse = () => {
     ticker.start();
 }
 
+render = () => {
+    requestAnimationFrame(render);
+    renderer.render(stage);
+}
+
+/*slider takes value from the html element, 
+and asign that value with the speed attribut of the bouncing ball*/
 var slider = document.getElementById("myRange");
 slider.oninput = function () {
     var converNumber = Number(this.value);
     console.log(converNumber)
-    speed2 = converNumber;
-
+    speed = converNumber;
 }
 
 
