@@ -7,6 +7,7 @@ renderer = new PIXI.WebGLRenderer(600, 600, {
     resolution: 1,
 });
 document.body.appendChild(renderer.view);
+
 //Creates PIXI.Container for all objects ex. images. 
 stage = new PIXI.Container();
 
