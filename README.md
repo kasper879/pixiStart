@@ -1,11 +1,12 @@
 # pixiStart
 My first PIXI app, with a bouncing ball. 
 
-##To run the Application:  
-  *  1. Clone the project 
-  *  2. Go to the project 
-  *  3. npm install 
-  *  4. Server is running on a localhost:3000
+##To run the Application 
+
+     1. Clone the project 
+     2. Go to the project 
+     3. npm install 
+     4. Server is running on a localhost:3000
 
 ## How the application works 
 
