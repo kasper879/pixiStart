@@ -62,7 +62,7 @@ function setup() {
 
 var yAxis = 1;
 var speed = 5;
-//StartBounce function Runs Pixi.Ticker() that runs an update loop, until it hit the requirements 
+//StartBounce function runs with Pixi.Ticker() that runs an update loop, until it hit the requirements 
 startBounce = () => {
     const ticker = new PIXI.ticker.Ticker();
     ticker.add(() => {
