@@ -97,7 +97,6 @@ and asign that value with the speed attribut of the bouncing ball*/
 var slider = document.getElementById("myRange");
 slider.oninput = function () {
     var converNumber = Number(this.value);
-    console.log(converNumber)
     speed = converNumber;
 }
 
